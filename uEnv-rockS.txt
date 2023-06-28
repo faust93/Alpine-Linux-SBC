@@ -1,0 +1,4 @@
+kernel=Image
+fdt=dtb
+cmdline=earlycon=uart8250,mmio32,0xff0a0000 swiotlb=1 coherent_pool=1m earlyprintk console=ttyS0,1500000n8 rw rootfstype=f2fs rootwait
+overlays=rk3308-console-on-uart0

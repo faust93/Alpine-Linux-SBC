@@ -1,0 +1,4 @@
+kernel=Image
+fdt=dtb
+cmdline=console=ttyFIQ0,1500000 rw rootwait earlycon=uart8250,mmio32,0xfe660000
+overlays=rk3568-uart8-m1

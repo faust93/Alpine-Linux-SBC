@@ -1,0 +1,24 @@
+From c96995c2ffdc1a22b6dd9ede6197986021752082 Mon Sep 17 00:00:00 2001
+From: faust93 <monumentum@gmail.com>
+Date: Tue, 6 Jun 2023 19:42:27 +0300
+Subject: [PATCH] rockchip: Fix early use of bootph props
+
+---
+ arch/arm/dts/rk3568-rock-3a-u-boot.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/dts/rk3568-rock-3a-u-boot.dtsi b/arch/arm/dts/rk3568-rock-3a-u-boot.dtsi
+index ed47efa44b..b5ca23a82a 100644
+--- a/arch/arm/dts/rk3568-rock-3a-u-boot.dtsi
++++ b/arch/arm/dts/rk3568-rock-3a-u-boot.dtsi
+@@ -19,6 +19,6 @@
+ 
+ &uart2 {
+ 	clock-frequency = <24000000>;
+-	bootph-all;
++	u-boot,dm-pre-reloc;
+ 	status = "okay";
+ };
+-- 
+2.39.1
+

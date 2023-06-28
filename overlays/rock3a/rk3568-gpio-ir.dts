@@ -1,0 +1,29 @@
+// gpio-ir tx GPIO99 (PIN12, GPIO3_A3)
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "rockchip,rk3568";
+
+	fragment@0 {
+		target-path = "/";
+		__overlay__ {
+                    ir: ir-receiver {
+                        compatible = "gpio-ir-receiver";
+                        gpios = <&gpio3 3 1>;
+                        pinctrl-names = "default";
+                        pinctrl-0 = <&ir_int>;
+                    };
+		};
+	};
+       fragment@1 {
+		target = <&pinctrl>;
+		__overlay__ {
+                    ir {
+                        ir_int: ir-int {
+                            rockchip,pins = <3 3 0 &pcfg_pull_none>;
+                        };
+                    };
+		};
+	};
+};

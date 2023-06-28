@@ -1,0 +1,15 @@
+#!/sbin/openrc-run
+
+description="BRCM BT Radio Enabler"
+supervisor="supervise-daemon"
+command="/usr/bin/bt_radio"
+
+stop_pre() {
+  ebegin "Stop bt_radio"
+  killall brcm_patchram_plus
+  eend $?
+}
+
+depend() {
+    before bluetooth
+}

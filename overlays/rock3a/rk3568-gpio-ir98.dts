@@ -1,0 +1,30 @@
+// gpio-ir tx GPIO98 (PIN36, GPIO3_A2)
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "rockchip,rk3568";
+
+	fragment@0 {
+		target-path = "/";
+		__overlay__ {
+                    ir: ir-receiver {
+                        compatible = "gpio-ir-receiver";
+                        gpios = <&gpio3 2 1>;
+                        pinctrl-names = "default";
+                        pinctrl-0 = <&ir_int>;
+                        status = "okay";
+                    };
+		};
+	};
+       fragment@1 {
+		target = <&pinctrl>;
+		__overlay__ {
+                    ir {
+                        ir_int: ir-int {
+                            rockchip,pins = <3 2 0 &pcfg_pull_node>;
+                        };
+                    };
+		};
+	};
+};

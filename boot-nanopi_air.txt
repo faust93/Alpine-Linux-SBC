@@ -1,0 +1,31 @@
+# after modifying, run ./mkscr.sh
+setenv machid 1029
+setenv load_addr 0x44000000
+
+echo "Boot script loaded from ${devtype} ${devnum}:${distro_bootpart}"
+
+if test -e ${devtype} ${devnum}:${distro_bootpart} /uEnv.txt; then
+    load ${devtype} ${devnum}:${distro_bootpart} ${load_addr} /uEnv.txt
+    env import -t ${load_addr} ${filesize}
+fi
+
+part uuid ${devtype} ${devnum}:2 uuid
+setenv bootargs "root=PARTUUID=${uuid} ${cmdline}"
+
+if load ${devtype} ${devnum}:${distro_bootpart} ${kernel_addr_r} /${kernel}; then
+    if load ${devtype} ${devnum}:${distro_bootpart} ${fdt_addr_r} /${fdt}; then
+        fdt addr ${fdt_addr_r}
+        fdt resize 65536
+        for overlay_file in ${overlays}; do
+            if load ${devtype} ${devnum}:${distro_bootpart} ${load_addr} /overlays/${overlay_file}.dtbo; then
+                echo "Applying kernel provided DT overlay ${overlay_file}.dtbo"
+                fdt apply ${load_addr}
+            fi
+        done
+        if load ${devtype} ${devnum}:${distro_bootpart} ${ramdisk_addr_r} /initrd.img; then
+            bootz ${kernel_addr_r} ${ramdisk_addr_r}:${filesize} ${fdt_addr_r};
+        else
+            bootz ${kernel_addr_r} - ${fdt_addr_r};
+        fi;
+    fi;
+fi

@@ -1,0 +1,14 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "rockchip,rk3308";
+
+	fragment@0 {
+		target = <&rk_timer_rtc>;
+
+		__overlay__ {
+			status = "okay";
+		};
+	};
+};

@@ -1,0 +1,19 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+        compatible = "rockchip,rk3568";
+
+        fragment@0 {
+                target-path = "/";
+
+                __overlay__ {
+                        gpio_leds: gpio-leds {
+                                compatible = "gpio-leds";
+                                user-led {
+                                        /delete-property/ linux,default-trigger;
+                                };
+                        };
+                };
+        };
+};

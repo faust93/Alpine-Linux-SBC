@@ -1,0 +1,211 @@
+## Introduction
+
+This document describes overlays provided in the kernel packages.
+For generic device tree overlays documentation please see
+https://wiki.radxa.com/Device-tree-overlays
+
+## Platform and Chips:
+
+rockchip (Rockchip)
+- rk3308
+
+#### usage
+
+Kernel provided DT overlay files are in
+  /boot/dtbs/$(uname -r)/rockchip/overlay/
+
+/boot/uEnv.txt contents:
+
+overlays=rk3308-console-on-uart0 rk3308-i2c1 rk3308-w1-gpio rk3308-spi-spidev rk3308-uart1
+param_spidev_spi_bus=2
+param_spidev_max_freq=10000000
+param_w1_pin=GPIO0_C1
+
+Add names of overlays you want to activate to overlays= line in /boot/uEnv.txt, separated with spaces.
+Add required parameters with their values to /boot/uEnv.txt, one per line.
+Add optional parameters with their values to /boot/uEnv.txt if you want to change the default value, one per line.
+
+#### rk3308 Overlay details:
+
+- i2c1-hym8563
+- rk3308-i2c0, rk3308-i2c1, rk3308-i2c2, rk3308-i2c3
+- rk3308-spi-spidev
+- rk3308-uart0, rk3308-uart1, rk3308-uart2
+- rk3308-pwm1, rk3308-pwm2, rk3308-pwm3
+- rk3308-console-on-uart0, rk3308-console-on-uart1, rk3308-console-on-uart2
+- rk3308-w1-gpio
+- rk3308-usb20-host
+- rockpis-v11-spi2-waveshare35b-v2, rockpis-v11-spi2-waveshare35c, rockpis-v12-spi2-waveshare35b-v2, rockpis-v12-spi2-waveshare35c
+- rockpis-dmic-8ch-pdm
+
+Notes:
+1.I2C0, UART1 and SPI2 cannot be enabled at the same time.
+2.I2C2 and SPI0 cannot be enabled at the same time.
+3.I2C3 and PWM2 cannot be enabled at the same time.
+4.I2C3 and PWM3 cannot be enabled at the same time.
+5.SPI0 and UART0 cannot be enabled at the same time.
+6.SPI2 and UART2 cannot be enabled at the same time.
+7.Waveshare 3.5 inch LCD related pins on 40-PIN HEADER 1: PIN#11/18/19/21/22/23/24/26
+
+#### i2c1-hym8563
+
+Activates hym8563 RTC
+
+Related pins: I2C1(SCL/SDA), nINT(GPIO0_C1)
+
+#### rk3308-i2c0
+
+Activates I2C bus 0
+
+I2C0 pins (SCL, SDA): GPIO1_D1, GPIO1_D0
+
+#### rk3308-i2c1
+
+Activates I2C bus 1
+
+I2C1 pins (SCL, SDA): GPIO0_B4, GPIO0_B3
+
+#### rk3308-i2c2
+
+Activates I2C bus 2
+
+I2C2 pins (SCL, SDA): GPIO2_A3, GPIO2_A2
+
+#### rk3308-i2c3
+
+Activates I2C bus 3
+
+I2C0 pins (SCL, SDA): GPIO0_C0, GPIO0_B7
+
+#### rk3308-spi-spidev
+
+Activates SPIdev device node (/dev/spidevX.Y) for userspace SPI access,
+where X is the bus number and Y is the CS number
+
+SPI 0 pins (MOSI, MISO, SCK, CS): GPIO2_A1, GPIO2_A0, GPIO2_A2, GPIO2_A3
+SPI 1 pins (MOSI, MISO, SCK, CS): GPIO3_B4, GPIO3_B2, GPIO3_B3, GPIO3_B5
+SPI 2 pins (MOSI, MISO, SCK, CS): GPIO1_C7, GPIO1_C6, GPIO1_D0, GPIO1_D1
+
+Parameters:
+
+param_spidev_spi_bus (int)
+    SPI bus to activate SPIdev support on
+    Required
+    Supported values: 0
+
+param_spidev_spi_cs (int)
+    SPI chip select number
+    Optional
+    Default: 0
+    Supported values: 0
+
+param_spidev_max_freq (int)
+    Maximum SPIdev frequency
+    Optional
+    Default: 10000000
+    Range: 3000 - 100000000
+
+#### rk3308-uart0
+
+Activates serial port 0 (/dev/ttyS0)
+
+UART0 pins (RXD, TXD): GPIO2_A0, GPIO2_A1
+
+#### rk3308-uart1
+
+Activates serial port 1 (/dev/ttyS1)
+
+UART1 pins (RXD, TXD): GPIO1_D0, GPIO1_D1
+
+#### rk3308-uart2
+
+Activates serial port 2 (/dev/ttyS2)
+
+UART2 pins (RXD, TXD): GPIO1_C6, GPIO1_C7
+
+#### rk3308-pwm1
+
+Activates PWM1
+
+#### rk3308-pwm2
+
+Activates PWM2
+
+#### rk3308-pwm3
+
+Activates PWM3
+
+#### rk3308-console-on-uart0
+
+Activates debug console on UART0
+
+console pins (RXD, TXD): GPIO2_A0, GPIO2_A1
+
+Notes:
+1.rk3308-console-on-uart0 and rk3308-uart0 cannnot be added together
+in /boot/uEnv.txt.
+
+#### rk3308-console-on-uart1
+
+Activates debug console on UART1
+
+console pins (RXD, TXD): GPIO1_D0, GPIO1_D1
+
+Notes:
+1.rk3308-console-on-uart1 and rk3308-uart1 cannnot be added together
+in /boot/uEnv.txt.
+
+#### rk3308-console-on-uart2
+
+Activates debug console on UART2
+
+console pins (RXD, TXD): GPIO1_C6, GPIO1_C7
+
+Notes:
+1.rk3308-console-on-uart2 and rk3308-uart2 cannnot be added together
+in /boot/uEnv.txt.
+
+#### rk3308-w1-gpio
+
+Activates 1-Wire GPIO master
+
+Requires an external pull-up resistor on the data pin
+
+Parameters:
+
+param_w1_pin (pin)
+	Data pin for 1-Wire master
+	Optional
+	Default: GPIO0_C1
+
+#### rk3308-usb20-host
+
+Set USB 2.0 OTG to host mode.
+
+#### rockpis-v11-spi2-waveshare35b-v2
+
+Activates waveshare 3.5inch lcd(B v2) on ROCK Pi S V1.1
+
+#### rockpis-v11-spi2-waveshare35c
+
+Activates waveshare 3.5inch lcd(C) on ROCK Pi S V1.1
+
+#### rockpis-v12spi2-waveshare35b-v2
+
+Activates waveshare 3.5inch lcd(B v2) on ROCK Pi S V1.2
+
+#### rockpis-v12-spi2-waveshare35c
+
+Activates waveshare 3.5inch lcd(C) on ROCK Pi S V1.2
+
+#### rockpis-dmic-8ch-pdm
+
+Activates dmic on ROCK PI S V1.2
+
+#### rockpis-spdif-out
+
+Activates spdif-out on GPIO0_C1
+
+#### rockpis-i2s-out.dts
+
+Activates I2S

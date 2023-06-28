@@ -1,0 +1,9 @@
+## Compile
+
+dtc -@ -Hepapr -I dts -O dtb -o rk3568-gpio-ir.dtbo rk3568-gpio-ir.dts
+
+
+## Test
+
+dtmerge _base.dtb _out.dtb rk3568-gpio-ir.dtbo
+dtdiff _base.dtb _out.dtb
