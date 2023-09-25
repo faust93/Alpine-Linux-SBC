@@ -1,0 +1,38 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+        compatible = "allwinner,sun50i-h5";
+
+	fragment@0 {
+		target-path = "/";
+		__overlay__ {
+                    leds {
+                        red {
+                            label = "riva:red";
+                            gpios = <&pio 0 64 0>;
+                            default-state = "off";
+                        };
+
+                        green {
+                            label = "riva:green";
+                            gpios = <&pio 0 03 0>;
+                            default-state = "off";
+                        };
+
+                        blue {
+                            label = "riva:blue";
+                            gpios = <&pio 0 65 0>;
+                            default-state = "on";
+                        };
+
+                        white {
+                            label = "riva:white";
+                            gpios = <&pio 0 66 0>;
+                            default-state = "off";
+                        };
+
+                    };
+		};
+	};
+};

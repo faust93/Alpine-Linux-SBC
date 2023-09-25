@@ -1,0 +1,4 @@
+kernel=Image
+fdt=dtb
+cmdline=earlyprintk console=ttyS0,115200 noinitrd rootwait rw rootfstype=f2fs
+overlays=

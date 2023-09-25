@@ -1,0 +1,18 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+        compatible = "allwinner,sun50i-h5";
+
+          fragment@0 {
+            target = <&pio>;
+            __overlay__ {
+              input_0: input_0 {
+                pins = "PA1";
+                function = "gpio_in";
+                bias-pull-up;
+              };
+            };
+          };
+
+};
