@@ -3,6 +3,7 @@
 A set of scripts to build Alpine Linux bootable image for the following set of SBCs:
 
  * NanoPi NEO Air
+ * NanoPi NEO Plus2
  * RockPi S
  * RockPi 3A
 
