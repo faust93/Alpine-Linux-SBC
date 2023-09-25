@@ -244,18 +244,18 @@ setup_rootfs()
 stage2()
 {
     cp /usr/bin/qemu-aarch64-static "$mountpt/usr/bin/"
-    cp stage2.sh "$mountpt/root/"
+    cp stage2_r3a.sh "$mountpt/root/"
 
     mount -t proc none "$mountpt/proc"
     mount -o bind /dev "$mountpt/dev"
 
-    chroot "$mountpt/" /usr/bin/qemu-aarch64-static /bin/sh /root/stage2.sh
+    chroot "$mountpt/" /usr/bin/qemu-aarch64-static /bin/sh /root/stage2_r3a.sh
 }
 
 stage2_cleanup()
 {
     rm "$mountpt/usr/bin/qemu-aarch64-static"
-    rm "$mountpt/root/stage2.sh"
+    rm "$mountpt/root/stage2_r3a.sh"
     umount "$mountpt/proc"
     umount "$mountpt/dev"
 }
