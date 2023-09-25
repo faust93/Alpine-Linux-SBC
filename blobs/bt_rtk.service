@@ -1,0 +1,15 @@
+#!/sbin/openrc-run
+
+description="RTK BT Radio Enabler"
+supervisor="supervise-daemon"
+command="/usr/bin/bt_rtk"
+
+stop_pre() {
+  ebegin "Stop bt_rtk"
+  killall rtk_hciattach
+  eend $?
+}
+
+depend() {
+    before bluetooth
+}

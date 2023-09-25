@@ -8,6 +8,7 @@ export CLANG_PATH=/opt/toolc/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/b
 export PATH="$CLANG_PATH:$PATH"
 export CROSS_COMPILE=aarch64-linux-gnu-
 export CROSS_COMPILE_ARM64=aarch64-linux-gnu-
+
 export ARCH=arm64
 
 DEVICE="rockS"
@@ -29,7 +30,7 @@ UBOOT_DIR="u-boot-$DEVICE"
 # Kernel config
 KERNEL_REPO="https://github.com/piter75/rockchip-kernel.git"
 KERNEL_BRANCH="rockpis-develop-4.4"
-KERNEL_DIR="kernel-rpis"
+KERNEL_DIR="kernel-rockchip"
 KERNEL_CONFIG="rk3308_linux"
 KERNEL_DTB="rk3308-rock-pi-s"
 
@@ -238,6 +239,12 @@ setup_rootfs()
     ln -sf $(basename "$KERNEL_DTB.dtb") "$mountpt/boot/dtb"
 
     install -m 755 "$OUT/Image" "$mountpt/boot"
+
+    # blobs
+    install -m 755 blobs/rtk_hciattach "$mountpt/usr/bin"
+    install -m 755 blobs/bt_rtk "$mountpt/usr/bin"
+    cp -f blobs/bt_rtk.service "$mountpt/etc/init.d/bt_rtk"
+    chmod 755 "$mountpt/etc/init.d/bt_rtk"
 }
 
 # Stage2 system provisioning

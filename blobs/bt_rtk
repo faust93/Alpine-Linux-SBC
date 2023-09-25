@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo 0 > /sys/class/rfkill/rfkill0/state
+echo 1 > /sys/class/rfkill/rfkill0/state
+rtk_hciattach -n -s 115200 /dev/ttyS4 rtk_h5
